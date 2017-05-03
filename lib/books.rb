@@ -28,5 +28,13 @@ class Book
     self.title == another_book.title && self.author == another_book.author
   end
 
-
+  def Book.find(identification)
+    found_book = nil
+    Book.all.each do |book|
+      if book.id == indentification
+        found_book = book
+      end
+    end
+    found_book
+  end    
 end

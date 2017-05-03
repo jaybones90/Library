@@ -37,4 +37,22 @@ describe(Book) do
     end
   end
 
+  describe("#id") do
+    it('get the id of a book ') do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      expect(test_book.id).to(be_an_instance_of(Fixnum))
+    end
+  end
+
+  describe('.find') do
+    it("finds a book based off an id") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'The Hatchet2', :author => 'Gary Paulsen2'})
+      test_book2.save
+      expect(Book.find(test_book)).to(eq(test_book))
+    end
+  end
+
 end
