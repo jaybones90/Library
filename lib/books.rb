@@ -55,8 +55,11 @@ class Book
 
   def update (attributes)
     @title = attributes[:title]
-    id = self.id
-    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{id};")
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{self.id};")
   end
 
+  def delete
+    DB.exec("DELETE FROM books WHERE id = #{self.id};")
+  end
+  
 end

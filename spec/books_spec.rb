@@ -82,4 +82,15 @@ describe(Book) do
     end
   end
 
+  describe("#delete") do
+    it("will delete a book") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'Fear and Loathing in Las Vegas', :author => 'Hunter S. Thompson'})
+      test_book2.save
+      test_book.delete
+      expect(Book.all).to(eq([test_book2]))
+    end
+  end
+
 end
