@@ -38,4 +38,25 @@ class Book
     end
   end
 
+  define_singleton_method(:find_by_author) do |author|
+    Book.all.each do |book|
+      if book.author == author
+        return book
+      end
+    end
+  end
+  define_singleton_method(:find_by_title) do |title|
+    Book.all.each do |book|
+      if book.title == title
+        return book
+      end
+    end
+  end
+
+  def update (attributes)
+    @title = attributes[:title]
+    id = self.id
+    DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{id};")
+  end
+
 end

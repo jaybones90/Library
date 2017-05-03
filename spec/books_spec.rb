@@ -54,5 +54,32 @@ describe(Book) do
       expect(Book.find(test_book.id)).to(eq(test_book))
     end
   end
+  describe(".find_by_author") do
+    it("finds a book based off an author") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'The Hatchet2', :author => 'Gary Paulsen2'})
+      test_book2.save
+      expect(Book.find_by_author(test_book.author)).to(eq(test_book))
+    end
+  end
+  describe(".find_by_title") do
+    it("finds a book based off an title") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'The Hatchet2', :author => 'Gary Paulsen2'})
+      test_book2.save
+      expect(Book.find_by_title(test_book.title)).to(eq(test_book))
+    end
+  end
+
+  describe("#update") do
+    it("will update a book title and author") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book.update({:title => 'Fear and Loathing in Las Vegas', :author => 'Hunter S. Thompson'})
+      expect(test_book.title).to(eq('Fear and Loathing in Las Vegas'))
+    end
+  end
 
 end
