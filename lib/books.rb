@@ -61,5 +61,5 @@ class Book
   def delete
     DB.exec("DELETE FROM books WHERE id = #{self.id};")
   end
-  
+
 end
