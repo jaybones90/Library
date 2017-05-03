@@ -9,7 +9,7 @@ class Person
 
   def save
     result = DB.exec("INSERT INTO person (name) VALUES ('#{@name}') RETURNING id;")
-    @id = result.first['id']
+    @id = result.first['id'].to_i
   end
 
   def Person.all
@@ -27,6 +27,12 @@ class Person
     self.name == other_person.name && self.class == other_person.class
   end
 
-
+  def Person.find (identification)
+    Person.all.each do |person|
+      if person.id == identification
+        return person
+      end
+    end
+  end
 
 end

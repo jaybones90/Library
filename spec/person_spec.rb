@@ -28,4 +28,20 @@ describe(Person) do
     expect(test_person == test_person2).to(eq(true))
     end
   end
+  describe('#id') do
+    it('returns the id of a person') do
+      test_person = Person.new({:name => "Jason"})
+      test_person.save
+      expect(test_person.id).to(be_an_instance_of(Fixnum))
+    end
+  end
+  describe('.find') do
+    it('finds a person by its id') do
+      test_person = Person.new({:name => "Jason"})
+      test_person.save
+      test_person2 = Person.new({:name => "James"})
+      test_person2.save
+      expect(Person.find(test_person2.id)).to(eq(test_person2))
+    end
+  end
 end
