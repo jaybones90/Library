@@ -24,6 +24,9 @@ class Book
     @id = result.first['id'].to_i
   end
 
+  def ==(another_book)
+    self.title == another_book.title && self.author == another_book.author
+  end
 
 
 end

@@ -29,4 +29,12 @@ describe(Book) do
     end
   end
 
+  describe('#==') do
+    it('compares the author and name and returns true if they are the same') do
+      test_book1 = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book2 = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      expect(test_book1 == test_book2).to(eq(true))
+    end
+  end
+
 end
