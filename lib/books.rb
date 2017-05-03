@@ -6,15 +6,17 @@ class Book
   def initialize(attributes)
     @title = attributes[:title]
     @author = attributes[:author]
+    @id = attributes[:id]
   end
 
   def Book.all
     books = []
     found_books = DB.exec("SELECT * FROM books;")
     found_books.each() do |book|
-      title = book.fetch('title')
-      author = book.fetch('author')
-      books.push(Book.new({:title => title , :author => author}))
+      title = book['title']
+      author = book['author']
+      id = book['id'].to_i
+      books.push(Book.new({:title => title , :author => author, :id => id}))
       end
     books
   end
@@ -28,13 +30,12 @@ class Book
     self.title == another_book.title && self.author == another_book.author
   end
 
-  def Book.find(identification)
-    found_book = nil
+  define_singleton_method(:find) do |identification|
     Book.all.each do |book|
-      if book.id == indentification
-        found_book = book
+      if book.id == identification
+        return book
       end
     end
-    found_book
-  end    
+  end
+
 end
