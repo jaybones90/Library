@@ -49,11 +49,28 @@ describe(Person) do
   end
 
   describe("#update") do
-    it("will update a persons name") do
-      test_person = Person.new({:name => "Jason"})
-      test_person.save
-      test_person.update({:name => "James"})
-      expect(test_person.name).to(eq('James'))
+    it("let you add a book to a person") do
+      jason = Person.new({:name => "Jason"})
+      jason.save
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'Fear and Loathing in Las Vegas', :author => 'Hunter S. Thompson'})
+      test_book2.save
+      jason.update({:book_ids => [test_book.id, test_book2.id]})
+      expect(jason.books).to(eq([test_book, test_book2]))
+    end
+  end
+
+  describe("#books") do
+    it("will return all the books associated with the person") do
+      jason = Person.new({:name => "Jason"})
+      jason.save
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      test_book2 = Book.new({:title => 'Fear and Loathing in Las Vegas', :author => 'Hunter S. Thompson'})
+      test_book2.save
+      jason.update({:book_ids => [test_book.id, test_book2.id]})
+      expect(jason.books).to(eq([test_book, test_book2]))
     end
   end
 

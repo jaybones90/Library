@@ -60,13 +60,13 @@ class Book
     DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{self.id};")
 
     attributes.fetch(:person_ids, []).each do |person_id|
-      DB.exec("INSERT INTO books_person (person_id, books_id) VALUES (#{person_id}, #{self.id});")
+      DB.exec("INSERT INTO books_person (person_id, book_id) VALUES (#{person_id}, #{self.id});")
     end
   end
 
   def persons
     books_persons_array = []
-    results = DB.exec("SELECT person_id FROM books_person WHERE books_id = #{self.id};")
+    results = DB.exec("SELECT person_id FROM books_person WHERE book_id = #{self.id};")
     results.each do |result|
       person_id = result.fetch('person_id').to_i
       person = DB.exec("SELECT * FROM person WHERE id = #{person_id};")
