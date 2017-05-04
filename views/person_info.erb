@@ -1,0 +1,24 @@
+<h3>Person Name:</h3>
+<%= @person.name %>
+
+
+<% if @books.any? %>
+  <form  action="/book/<%= @book.id%>" method="post">
+    <input type="hidden" name="_method" value="patch">
+
+    <% @books.each do |book| %>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="book_ids[]" value="<%= book.id %>"><%= book.title %>
+      </label>
+    </div>
+    <% end %>
+
+    <button type="submit">Add Book</button>
+  </form>
+  <% end %>
+
+
+
+
+<a href="/">Return to Main Page</a>

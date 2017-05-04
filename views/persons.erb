@@ -1,0 +1,19 @@
+
+<form action="/person/new" method="post">
+  <div class="form-group">
+    <label for="person_name">Creat a new account</label>
+    <input type="text" id="person_name" name='name' placeholder="Enter your name">
+    <button type="submit" name="submit">Submit</button>
+  </div>
+</form>
+
+<% if @persons.any? %>
+<h3>Please click your name to view your account details</h3>
+<% @persons.each do |person| %>
+  <ul>
+    <a href="/person/<%= person.id %>"><%= person.name %></a>
+  </ul>
+<% end %>
+<% else %>
+<p> There are no accounts added yet</p>
+<% end %>

@@ -1,5 +1,30 @@
 <h1>LIBRARY</h1>
 
 
+<a href="/person/new">Create a new library account</a>
+<br>
 <a href="book/new">Add a book to the library</a>
-<a href="/books">See the library of books</a>
+
+
+<h3>People who have library accounts:</h3>
+
+<% if @persons.any? %>
+<h3>Please click your name to view your account details</h3>
+<% @persons.each do |person| %>
+  <ul>
+    <a href="/person/<%= person.id %>"><%= person.name %></a>
+  </ul>
+<% end %>
+<% end %>
+
+
+
+<h3>The books in the library:</h3>
+<% if @books.any? %>
+<h3>Please click the book title to view your book details</h3>
+<% @books.each do |book| %>
+  <ul>
+    <a href="/book/<%= book.id %>"><%= book.title %></a>
+  </ul>
+<% end %>
+<% end %>
