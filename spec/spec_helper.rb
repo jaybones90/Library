@@ -8,6 +8,6 @@ DB = PG.connect({:dbname => 'library_test'})
 
 RSpec.configure do |config|
   config.after(:each) do
-    DB.exec("TRUNCATE books, person;")
+    DB.exec("TRUNCATE books, person, books_person;")
   end
 end

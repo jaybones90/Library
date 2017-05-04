@@ -1,12 +1,13 @@
 
 class Book
 
-  attr_accessor :title, :author, :id
+  attr_accessor :title, :author, :id, :checkout
 
   def initialize(attributes)
     @title = attributes[:title]
     @author = attributes[:author]
     @id = attributes[:id]
+    @checkout = false
   end
 
   def Book.all
@@ -16,13 +17,14 @@ class Book
       title = book['title']
       author = book['author']
       id = book['id'].to_i
-      books.push(Book.new({:title => title , :author => author, :id => id}))
+      checkout = book['checkout']
+      books.push(Book.new({:title => title , :author => author, :id => id, :checkout => checkout}))
       end
     books
   end
 
   def save
-    result = DB.exec("INSERT INTO books (title, author) VALUES ('#{@title}', '#{@author}') RETURNING id;")
+    result = DB.exec("INSERT INTO books (title, author, checkout) VALUES ('#{@title}', '#{@author}', #{@checkout}) RETURNING id;")
     @id = result.first['id'].to_i
   end
 
@@ -54,8 +56,24 @@ class Book
   end
 
   def update (attributes)
-    @title = attributes[:title]
+    @title = attributes.fetch(:title, @title)
     DB.exec("UPDATE books SET title = '#{@title}' WHERE id = #{self.id};")
+
+    attributes.fetch(:person_ids, []).each do |person_id|
+      DB.exec("INSERT INTO books_person (person_id, books_id) VALUES (#{person_id}, #{self.id});")
+    end
+  end
+
+  def persons
+    books_persons_array = []
+    results = DB.exec("SELECT person_id FROM books_person WHERE books_id = #{self.id};")
+    results.each do |result|
+      person_id = result.fetch('person_id').to_i
+      person = DB.exec("SELECT * FROM person WHERE id = #{person_id};")
+      name = person.first['name']
+      books_persons_array.push(Person.new({:name => name, :id => person_id}))
+    end
+    books_persons_array
   end
 
   def delete

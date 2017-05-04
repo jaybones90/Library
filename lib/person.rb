@@ -35,4 +35,13 @@ class Person
     end
   end
 
+  def update (attributes)
+    @name = attributes[:name]
+    DB.exec("UPDATE person SET name = '#{@name}' WHERE id = #{self.id};")
+  end
+
+  def delete
+    DB.exec("DELETE FROM person WHERE id = #{self.id}")
+  end
+
 end

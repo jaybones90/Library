@@ -15,6 +15,13 @@ describe(Book) do
     end
   end
 
+  describe('#checkout') do
+    it('returns the status on if the book is checked out') do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      expect(test_book.checkout).to(eq(false))
+    end
+  end
+
   describe('.all') do
     it('returns all the books but starts out empty') do
       expect(Book.all).to(eq([]))
@@ -77,8 +84,25 @@ describe(Book) do
     it("will update a book title and author") do
       test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
       test_book.save
-      test_book.update({:title => 'Fear and Loathing in Las Vegas', :author => 'Hunter S. Thompson'})
-      expect(test_book.title).to(eq('Fear and Loathing in Las Vegas'))
+      randy = Person.new({:name => "Macho Man Randy Savage"})
+      randy.save
+      jimbo = Person.new({:name => "Jimbo Jones"})
+      jimbo.save
+      test_book.update({:person_ids => [randy.id , jimbo.id]})
+      expect(test_book.persons).to(eq([randy, jimbo]))
+    end
+  end
+
+  describe("#persons") do
+    it("will return all people associated with a book") do
+      test_book = Book.new({:title => 'The Hatchet', :author => 'Gary Paulsen'})
+      test_book.save
+      randy = Person.new({:name => "Macho Man Randy Savage"})
+      randy.save
+      jimbo = Person.new({:name => "Jimbo Jones"})
+      jimbo.save
+      test_book.update({:person_ids => [randy.id , jimbo.id]})
+      expect(test_book.persons).to(eq([randy, jimbo]))
     end
   end
 
