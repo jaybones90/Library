@@ -58,6 +58,7 @@ class Person
   end
 
   def delete
+    DB.exec("DELETE FROM books_person WHERE id = #{self.id}")
     DB.exec("DELETE FROM person WHERE id = #{self.id}")
   end
 
